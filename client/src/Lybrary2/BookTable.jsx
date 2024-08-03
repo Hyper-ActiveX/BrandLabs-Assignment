@@ -24,7 +24,7 @@ const BookTable = () => {
   });
   const [page, setPage] = useState(0);
   const [totalBooks, setTotalBooks] = useState(0);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(100);
 
   useEffect(() => {
     fetchBooks(page + 1, limit);

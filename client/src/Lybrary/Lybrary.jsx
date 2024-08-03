@@ -10,7 +10,7 @@ const Lybrary = () => {
   const [search, setSearch] = useState('');
   const [sortConfig, setSortConfig] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [booksPerPage, setBooksPerPage] = useState(10);
+  const [booksPerPage, setBooksPerPage] = useState(100);
   const [expandedUrl, setExpandedUrl] = useState({});
   const [selectedBooks, setSelectedBooks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -226,9 +226,9 @@ const Lybrary = () => {
             <i className="fa fa-angle-double-right" onClick={() => handlePageChange(currentPage + 1)}></i>
           )}
           <select value={booksPerPage} onChange={handleBooksPerPage}>
-            <option value={5}>5</option>
-            <option value={10}>10</option>
+            <option value={100}>100</option>
             <option value={50}>50</option>
+            <option value={10}>10</option>
           </select>
         </div>
         <button
