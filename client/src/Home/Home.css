@@ -1,0 +1,27 @@
+.homepage{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    height: 80vh ;
+}
+.button {
+    border: none;
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    padding: 20px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.b1 {
+    background-color: #2C2D3F;
+    padding: 15px 32px;
+}
+@media only screen and (max-width: 600px) {
+    .homepage{
+        flex-direction: column;
+    }
+  }

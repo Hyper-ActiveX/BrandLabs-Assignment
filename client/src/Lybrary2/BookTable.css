@@ -1,0 +1,63 @@
+.container {
+    padding: 20px;
+  }
+  
+  .modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 24px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .add-book-container {
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 20px;
+  }
+
+
+.MuiTableHead-root .MuiTableCell-root {
+  background-color: rgb(148, 145, 145) !important;
+
+}
+
+.MuiTableRow-root:nth-of-type(even) {
+  background-color: #ddd2e0 !important;
+}
+
+.MuiTableRow-root:hover {
+  background-color: #d2d1d0 !important; 
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.pagination-controls {
+  display: inline-flex;
+  align-items: flex-end;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top:20px ;
+}
+
+.pagination-controls span {
+  margin: 0 10px;
+}
+
+.fa {
+  cursor: pointer;
+}

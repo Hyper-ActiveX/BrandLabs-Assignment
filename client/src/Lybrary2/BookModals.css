@@ -1,0 +1,29 @@
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 24px;
+    max-height: 80%; 
+    overflow-y: auto; 
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 600px) {
+    .modal {
+      width: 90%; 
+      max-height: 80%; 
+      padding: 16px; 
+    }
+  }
+  
