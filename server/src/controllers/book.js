@@ -86,16 +86,30 @@ const GetBook = async (req, res) => {
 };
 
 const GetAllBooks = async (req, res) => {
-  const { page = 1, limit = 50 } = req.query;
+  const { page = 1, limit = 50 , search = ''} = req.query;
   const pageNum = parseInt(page, 10);
   const limitNum = parseInt(limit, 10);
+  const searchQuery = search.toLowerCase();
 
   try {
     const books = await prisma.book.findMany({
-      skip: (pageNum - 1) * limitNum,
-      take: limitNum,
+      where: {
+        name: {
+          contains: searchQuery,
+          mode: 'insensitive'
+        }
+      },
+        skip: (pageNum - 1) * limitNum,
+        take: limitNum,
     });
-    const totalBooks = await prisma.book.count();
+    const totalBooks = await prisma.book.count({
+      where: {
+        name:{
+          contains: searchQuery,
+          mode: 'insensitive'
+        }
+      }
+    });
     res.status(200).json({ books, totalBooks, page: pageNum, limit: limitNum });
   } catch (error) {
     res.status(500).json({ error: 'Error fetching books', details: error.message });

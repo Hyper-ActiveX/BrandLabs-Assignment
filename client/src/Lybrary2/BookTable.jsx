@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
-import { Box, Button } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import { getAllBooks, addBook, updateBook, deleteBook } from '../Middleware/Middleware';
 import dayjs from 'dayjs';
 import './BookTable.css';
@@ -25,19 +25,25 @@ const BookTable = () => {
   const [page, setPage] = useState(0);
   const [totalBooks, setTotalBooks] = useState(0);
   const [limit, setLimit] = useState(100);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
-    fetchBooks(page + 1, limit);
-  }, [page]);
+    fetchBooks(page + 1, limit, search);
+  }, [page, limit, search]);
 
-  const fetchBooks = async (page, limit) => {
+  const fetchBooks = async (page, limit, search) => {
     try {
-      const { books: booksData, totalBooks } = await getAllBooks(page, limit);
+      const { books: booksData, totalBooks } = await getAllBooks(page, limit, search);
       setBooks(booksData);
       setTotalBooks(totalBooks);
     } catch (error) {
       console.error('Error fetching books:', error);
     }
+  };
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+    setPage(0); // Reset to first page on new search
   };
 
   const handleOpenModal = (book = {}) => {
@@ -83,7 +89,7 @@ const BookTable = () => {
       } else {
         await addBook(bookData);
       }
-      fetchBooks(page + 1, limit);
+      fetchBooks(page + 1, limit, search);
       handleCloseModal();
     } catch (error) {
       console.error('Error saving book:', error);
@@ -93,7 +99,7 @@ const BookTable = () => {
   const handleDeleteBook = async (id) => {
     try {
       await deleteBook(id);
-      fetchBooks(page + 1, limit);
+      fetchBooks(page + 1, limit, search);
     } catch (error) {
       console.error(`Error deleting book with ID ${id}:`, error);
     }
@@ -150,6 +156,10 @@ const BookTable = () => {
     data: books,
     manualPagination: true,
     enableBottomToolbar: false,
+    manualFiltering: true,
+    onGlobalFilterFnChange: handleSearchChange,
+    onGlobalFilterChange: setSearch,
+    state: {search}
   });
 
   const totalPages = Math.ceil(totalBooks / limit);
@@ -158,23 +168,21 @@ const BookTable = () => {
     <Box className="container">
       <MaterialReactTable table={table} />
       <div className="pagination-container">
-      <div className="pagination-controls">
-        {page !== 0 && (
-          <i className="fa fa-angle-double-left" onClick={() => setPage(page - 1)}></i>
-        )}
-        <span>
-          Page {page + 1} of {totalPages}
-        </span>
-        {page + 1 !== totalPages && (
-          <i className="fa fa-angle-double-right" onClick={() => setPage(page + 1)}></i>
-        )}
-      </div>
+        <div className="pagination-controls">
+          {page !== 0 && (
+            <i className="fa fa-angle-double-left" onClick={() => setPage(page - 1)}></i>
+          )}
+          <span>
+            Page {page + 1} of {totalPages}
+          </span>
+          {page + 1 !== totalPages && (
+            <i className="fa fa-angle-double-right" onClick={() => setPage(page + 1)}></i>
+          )}
+        </div>
       </div>
       <div className='add-book-container'>
         <Button variant="contained" color="primary" onClick={() => handleOpenModal()}>Add Book</Button>
       </div>
-
-
       <BookModal
         open={modalOpen}
         onClose={handleCloseModal}

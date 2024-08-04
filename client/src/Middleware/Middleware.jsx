@@ -2,10 +2,10 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:3000';
 
-export const getAllBooks = async (page = 1, limit = 50) => {
+export const getAllBooks = async (page = 1, limit = 50, search = '') => {
   try {
     const response = await axios.get(`${API_URL}/getallbooks`, {
-      params: { page, limit },
+      params: { page, limit, search },
     });
     console.log(response.data)
     return response.data;

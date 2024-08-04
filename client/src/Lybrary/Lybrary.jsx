@@ -20,16 +20,16 @@ const Lybrary = () => {
   const [sortCycle, setSortCycle] = useState(0);
 
   useEffect(() => {
-    fetchBooks(currentPage, booksPerPage);
-  }, [currentPage, booksPerPage]);
+    fetchBooks(currentPage, booksPerPage, search);
+  }, [currentPage, booksPerPage, search]);
 
   useEffect(() => {
     setDisplayedBooks(getDisplayedBooks());
   }, [books, search, sortConfig, currentPage, booksPerPage]);
 
-  const fetchBooks = async (page, limit) => {
+  const fetchBooks = async (page, limit, search) => {
     try {
-      const { books: fetchedBooks, totalBooks: fetchedTotalBooks } = await getAllBooks(page, limit);
+      const { books: fetchedBooks, totalBooks: fetchedTotalBooks } = await getAllBooks(page, limit, search);
       setBooks(fetchedBooks);
       setTotalBooks(fetchedTotalBooks);
       setDisplayedBooks(getDisplayedBooks(fetchedBooks));
@@ -58,7 +58,7 @@ const Lybrary = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    fetchBooks(page, booksPerPage);
+    fetchBooks(page, booksPerPage, search);
   };
 
   const handleBooksPerPage = (event) => {
@@ -82,7 +82,7 @@ const Lybrary = () => {
   const handleDeleteBook = async (id) => {
     try {
       await deleteBook(id);
-      fetchBooks(currentPage, booksPerPage);
+      fetchBooks(currentPage, booksPerPage, search);
     } catch (error) {
       console.error('Error deleting book:', error);
     }
@@ -105,7 +105,7 @@ const Lybrary = () => {
       } else {
         await addBook(book);
       }
-      fetchBooks(currentPage, booksPerPage);
+      fetchBooks(currentPage, booksPerPage, search);
       handleCloseModal();
     } catch (error) {
       console.error('Error submitting book:', error);
